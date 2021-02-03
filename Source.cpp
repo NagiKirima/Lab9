@@ -74,12 +74,23 @@ bool Check_Doubles(vector<string> arr)
 int GetCount(string& row) 
 {
 	int count = 0;
+	for (int i = 0; i < row.length(); i++) 
+	{
+		switch (row[i]) 
+		{
+			case 'a': case 'A': case 'e': case 'E': 
+			case 'i': case 'I': case 'o': case 'O':
+			case 'u': case 'U': case 'y': case 'Y': 
+				count++;
+		}
+	}
 	return count;
 }
 int main()
 {
 	setlocale(LC_ALL, "ru");
 	ifstream inputF1("F1.txt");
+	string Last_Row;
 	if (inputF1.is_open()) //проверка на открытие файла
 	{
 		ofstream outputF2("F2.txt");
@@ -92,6 +103,7 @@ int main()
 			if (Check_Doubles(WordsArray))
 			{
 				outputF2 << CurrentRow << endl;
+				Last_Row = CurrentRow;
 			}
 			//cout << "---" << endl; //проверка цикла
 		}
@@ -103,21 +115,7 @@ int main()
 		inputF1.close();
 	}
 	inputF1.close();
+	//Вывод количества гласных букв в последней строке файла F2!
+	cout << "В последней строке файла F2 " << GetCount(Last_Row) << " гласных букв!\n";
 
-	ifstream inputF2("F2.text");
-	if (inputF2.is_open()) 
-	{
-		while (!inputF2.eof())
-		{
-			string CurrentRow;
-			getline(inputF2, CurrentRow);
-			int CountofLitterals = GetCount(CurrentRow);
-		}
-	}
-	else 
-	{
-		cout << "Файл F2 не открылся!Ошибка!\n";
-		inputF2.close();
-	}
-	inputF2.close();
 }
